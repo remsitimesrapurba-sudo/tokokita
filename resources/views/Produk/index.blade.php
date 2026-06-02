@@ -5,7 +5,9 @@
      <!-- Header Halaman dan Tombol Tambah --> 
     <div class="d-flex justify-content-between align-items-center mb-4 pt-3">
     <h2 class="fw-bold mb-0">Daftar Produk Tersedia</h2>
+    @can('isAdmin')
     <a href="/produk/create" class="btn btn-primary fw-bold px-4 py-2">Tambah Produk Baru</a>
+    @endcan
 </div> 
   
      <!-- Grid Produk --> 
@@ -28,7 +30,7 @@
                          @endif 
                            <!-- Tombol Aksi Edit dan Hapus --> 
                          <div class="mt-4 pt-3 border-top d-flex justify-content-between align-items-center"> 
-                              
+                             @can('isAdmin')
                              <!-- Tombol Edit (Boleh menggunakan Link biasa karena method GET) --> 
                              <a href="/produk/{{ $item->id }}/edit" class="btn btn-sm btn-outline-warning w-50 me-2"> 
                                  Edit 
@@ -42,7 +44,8 @@
                                  <button type="submit" class="btn btn-sm btn-outline-danger w-100"> 
                                      Hapus 
                                  </button> 
-                             </form> 
+                             </form>
+                             @endcan
   
                          </div> 
                      </div> 

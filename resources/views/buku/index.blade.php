@@ -6,11 +6,11 @@
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Daftar Buku Katalog</h2>
-        @auth
+        @can('isPustakawan')
             <a href="{{ route('buku.create') }}" class="btn btn-success">
                 <i class="fa-solid fa-plus"></i> Tambah Buku
             </a>
-        @endauth
+        @endcan
     </div>
 
     @if($bukus->isEmpty())
@@ -29,9 +29,9 @@
                         <th>Judul</th>
                         <th>Pengarang</th>
                         <th>Tahun Terbit</th>
-                        @auth
+                        @can('isPustakawan')
                             <th>Aksi</th>
-                        @endauth
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -41,7 +41,7 @@
                             <td>{{ $buku->judul }}</td>
                             <td>{{ $buku->pengarang }}</td>
                             <td>{{ $buku->tahun_terbit }}</td>
-                            @auth
+                            @can('isPustakawan')
                                 <td>
                                     <a href="{{ route('buku.edit', $buku->id) }}" class="btn btn-primary btn-sm">
                                         <i class="fa-solid fa-pen-to-square"></i> Edit
@@ -55,7 +55,7 @@
                                         </button>
                                     </form>
                                 </td>
-                            @endauth
+                            @endcan
                         </tr>
                     @endforeach
                 </tbody>

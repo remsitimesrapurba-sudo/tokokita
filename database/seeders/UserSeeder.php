@@ -14,10 +14,13 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         // Membuat satu akun Pustakawan bawaan
-        User::create([
-            'name' => 'Pustakawan Kampus',
-            'email' => 'pustakawan@kampus.ac.id',
-            'password' => Hash::make('pustakawan123'),
-        ]);
+        User::updateOrCreate(
+            ['email' => 'pustakawan@kampus.ac.id'],
+            [
+                'name' => 'Pustakawan Kampus',
+                'password' => Hash::make('pustakawan123'),
+                'role' => 'pustakawan',
+            ]
+        );
     }
 }
