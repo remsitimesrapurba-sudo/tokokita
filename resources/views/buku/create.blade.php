@@ -8,7 +8,7 @@
         <div class="col-md-6 offset-md-3">
             <h2 class="mb-4">Tambah Buku Baru</h2>
 
-            <form action="{{ route('buku.store') }}" method="POST" novalidate>
+            <form action="{{ route('buku.store') }}" method="POST" enctype="multipart/form-data" novalidate>
                 @csrf
 
                 <!-- Field Judul -->
@@ -61,6 +61,17 @@
                         max="{{ date('Y') }}"
                     >
                     @error('tahun_terbit')
+                        <div class="invalid-feedback d-block">
+                            <i class="fa-solid fa-circle-exclamation"></i> {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="sampul_buku" class="form-label">Sampul Buku</label>
+                    <input type="file" class="form-control @error('sampul_buku') is-invalid @enderror" id="sampul_buku" name="sampul_buku">
+                    <div class="form-text">Format yang diizinkan: JPG, JPEG, PNG. Maksimal 2MB.</div>
+                    @error('sampul_buku')
                         <div class="invalid-feedback d-block">
                             <i class="fa-solid fa-circle-exclamation"></i> {{ $message }}
                         </div>

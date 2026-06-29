@@ -38,6 +38,7 @@ Route::get('/data-mahasiswa', [MahasiswaController::class, 'data']);
 Route::get('/buku', [BukuController::class, 'index'])->name('buku.index');
 Route::get('/buku/{id}', [BukuController::class, 'show']);
 Route::get('/buku/kategori/{genre}', [BukuController::class, 'kategori']);
+Route::get('/buku/cetak-pdf', [BukuController::class, 'cetakPdf']);
 // RUTE TERPROTEKSI UNTUK MANAJEMEN BUKU (Hanya pustakawan)
 Route::middleware(['auth', 'role:pustakawan'])->group(function () {
     Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');

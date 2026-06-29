@@ -8,7 +8,7 @@
         <div class="col-md-6 offset-md-3">
             <h2 class="mb-4">Edit Buku</h2>
 
-            <form action="{{ route('buku.update', $buku->id) }}" method="POST" novalidate>
+            <form action="{{ route('buku.update', $buku->id) }}" method="POST" enctype="multipart/form-data" novalidate>
                 @csrf
                 @method('PUT')
 
@@ -66,6 +66,20 @@
                             <i class="fa-solid fa-circle-exclamation"></i> {{ $message }}
                         </div>
                     @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="sampul_buku" class="form-label">Sampul Buku</label>
+                    <input type="file" class="form-control @error('sampul_buku') is-invalid @enderror" id="sampul_buku" name="sampul_buku">
+                    <div class="form-text">Format yang diizinkan: JPG, JPEG, PNG. Maksimal 2MB.</div>
+                    @error('sampul_buku')
+                        <div class="invalid-feedback d-block">
+                            <i class="fa-solid fa-circle-exclamation"></i> {{ $message }}
+                        </div>
+                    @enderror
+                    @if($buku->sampul_buku)
+                        <img src="{{ asset('storage/' . $buku->sampul_buku) }}" alt="Sampul Buku" class="img-thumbnail mt-2" style="max-height: 150px;">
+                    @endif
                 </div>
 
                 <!-- Tombol -->

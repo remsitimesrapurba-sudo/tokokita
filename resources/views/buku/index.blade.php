@@ -6,11 +6,16 @@
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Daftar Buku Katalog</h2>
-        @can('isPustakawan')
-            <a href="{{ route('buku.create') }}" class="btn btn-success">
-                <i class="fa-solid fa-plus"></i> Tambah Buku
+        <div class="d-flex gap-2">
+            @can('isPustakawan')
+                <a href="{{ route('buku.create') }}" class="btn btn-success">
+                    <i class="fa-solid fa-plus"></i> Tambah Buku
+                </a>
+            @endcan
+            <a href="{{ url('/buku/cetak-pdf') }}" class="btn btn-outline-danger">
+                <i class="fa-solid fa-file-pdf"></i> Export PDF
             </a>
-        @endcan
+        </div>
     </div>
 
     @if($bukus->isEmpty())
@@ -26,6 +31,7 @@
                 <thead class="table-dark">
                     <tr>
                         <th>No</th>
+                        <th>Sampul</th>
                         <th>Judul</th>
                         <th>Pengarang</th>
                         <th>Tahun Terbit</th>
@@ -38,6 +44,13 @@
                     @foreach($bukus as $key => $buku)
                         <tr>
                             <td>{{ $key + 1 }}</td>
+                            <td>
+                                @if($buku->sampul_buku)
+                                    <img src="{{ asset('storage/' . $buku->sampul_buku) }}" alt="Sampul {{ $buku->judul }}" class="img-thumbnail" style="width: 70px; height: 95px; object-fit: cover;">
+                                @else
+                                    <span class="text-muted">Tidak ada</span>
+                                @endif
+                            </td>
                             <td>{{ $buku->judul }}</td>
                             <td>{{ $buku->pengarang }}</td>
                             <td>{{ $buku->tahun_terbit }}</td>

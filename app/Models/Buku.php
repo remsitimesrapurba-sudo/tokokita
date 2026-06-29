@@ -12,5 +12,6 @@ class Buku extends Model
         'judul',
         'pengarang',
         'tahun_terbit',
+        'sampul_buku',
     ];
 }
