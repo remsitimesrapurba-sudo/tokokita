@@ -14,4 +14,9 @@ class Buku extends Model
         'tahun_terbit',
         'sampul_buku',
     ];
+
+    public function peminjaman()
+    {
+        return $this->hasMany(Peminjaman::class);
+    }
 }

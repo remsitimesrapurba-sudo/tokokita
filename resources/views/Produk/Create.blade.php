@@ -39,7 +39,7 @@
                      <button type="submit" class="btn btn-success">Simpan Data</button> 
                      <a href="/produk" class="btn btn-secondary">Batal / Kembali</a> 
                  </form>  --}}
-                 <form action="/produk" method="POST"> 
+                 <form action="/produk" method="POST" enctype="multipart/form-data"> 
      @csrf  
       
      <div class="mb-3"> 
@@ -82,6 +82,15 @@
          @enderror 
      </div> 
       
+     <div class="mb-3"> 
+         <label class="form-label">Upload Foto Produk (Opsional)</label> 
+         <input type="file" name="gambar" class="form-control @error('gambar') is-invalid @enderror" accept="image/*"> 
+         <div class="form-text">Format yang diizinkan: JPG, JPEG, PNG. Ukuran maksimal: 2MB.</div> 
+         @error('gambar') 
+             <div class="invalid-feedback fw-bold">{{ $message }}</div> 
+         @enderror 
+     </div> 
+
      <button type="submit" class="btn btn-success">Simpan Data</button> 
      <a href="/produk" class="btn btn-secondary">Batal / Kembali</a> 
  </form> 

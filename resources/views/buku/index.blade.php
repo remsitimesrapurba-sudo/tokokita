@@ -38,6 +38,9 @@
                         @can('isPustakawan')
                             <th>Aksi</th>
                         @endcan
+                        @auth
+                            <th>Pinjam</th>
+                        @endauth
                     </tr>
                 </thead>
                 <tbody>
@@ -69,6 +72,13 @@
                                     </form>
                                 </td>
                             @endcan
+                            @auth
+                                <td>
+                                    <a href="/peminjaman/create?buku_id={{ $buku->id }}" class="btn btn-sm btn-primary">
+                                        <i class="fa-solid fa-book"></i> Pinjam
+                                    </a>
+                                </td>
+                            @endauth
                         </tr>
                     @endforeach
                 </tbody>

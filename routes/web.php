@@ -7,6 +7,7 @@ use App\Http\Controllers\BukuController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\TentangController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PeminjamanController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -36,9 +37,8 @@ Route::get('/mahasiswa/{nim}', [MahasiswaController::class, 'show']);
 Route::get('/data-mahasiswa', [MahasiswaController::class, 'data']);
 
 Route::get('/buku', [BukuController::class, 'index'])->name('buku.index');
-Route::get('/buku/{id}', [BukuController::class, 'show']);
-Route::get('/buku/kategori/{genre}', [BukuController::class, 'kategori']);
 Route::get('/buku/cetak-pdf', [BukuController::class, 'cetakPdf']);
+Route::get('/buku/kategori/{genre}', [BukuController::class, 'kategori']);
 // RUTE TERPROTEKSI UNTUK MANAJEMEN BUKU (Hanya pustakawan)
 Route::middleware(['auth', 'role:pustakawan'])->group(function () {
     Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');
@@ -48,15 +48,30 @@ Route::middleware(['auth', 'role:pustakawan'])->group(function () {
     Route::put('/buku/{id}', [BukuController::class, 'update'])->name('buku.update');
     Route::delete('/buku/{id}', [BukuController::class, 'destroy'])->name('buku.destroy');
 });
+Route::get('/buku/{id}', [BukuController::class, 'show'])->where('id', '[0-9]+');
 
 
 // RUTE PUBLIK PRODUK (Bisa diakses siapa saja tanpa login)
 Route::get('/produk', [ProdukController::class, 'index'])->name('produk.index');
+Route::get('/produk/cetak-pdf', [ProdukController::class, 'cetakPdf']);
+
+// RUTE PEMINJAMAN (Member yang login)
+Route::middleware('auth')->group(function () {
+    Route::get('/peminjaman', [PeminjamanController::class, 'index']);
+    Route::get('/peminjaman/create', [PeminjamanController::class, 'create']);
+    Route::post('/peminjaman', [PeminjamanController::class, 'store']);
+});
+
+// RUTE ADMIN PEMINJAMAN (Pustakawan & Admin)
+Route::middleware(['auth', 'role:pustakawan,admin'])->group(function () {
+    Route::get('/admin/peminjaman', [PeminjamanController::class, 'adminIndex']);
+    Route::put('/admin/peminjaman/{id}', [PeminjamanController::class, 'updateStatus']);
+});
 
 Route::get('/tentang', [TentangController::class, 'index']);
 
 // RUTE KHUSUS ADMIN: Create, Edit, Hapus Produk
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth', 'role:admin,pustakawan'])->group(function () {
     Route::get('/produk/create', [ProdukController::class, 'create'])->name('produk.create');
     Route::post('/produk', [ProdukController::class, 'store'])->name('produk.store');
     Route::get('/produk/{id}/edit', [ProdukController::class, 'edit']);

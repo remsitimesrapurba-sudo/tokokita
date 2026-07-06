@@ -13,20 +13,16 @@ class CekRole
      * Handle an incoming request.
      * $role adalah parameter dinamis yang akan kita kirim dari Route
      */
-    public function handle(Request $request, Closure $next, $role): Response
+    public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        // 1. Cek apakah pengguna sudah login
         if (!Auth::check()) {
             return redirect('/login');
         }
 
-        // 2. Cek apakah role pengguna SESUAI dengan role yang diizinkan route
-        if (Auth::user()->role !== $role) {
-            // Jika tidak sesuai, tampilkan halaman Error 403 (Forbidden / Dilarang Akses)
+        if (!in_array(Auth::user()->role, $roles)) {
             abort(403, 'Akses Ditolak! Anda tidak memiliki izin untuk membuka halaman ini.');
         }
 
-        // Jika semua syarat terpenuhi, persilakan pengguna melanjutkan ke Controller
         return $next($request);
     }
 }

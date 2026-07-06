@@ -5,9 +5,14 @@
      <!-- Header Halaman dan Tombol Tambah --> 
     <div class="d-flex justify-content-between align-items-center mb-4 pt-3">
     <h2 class="fw-bold mb-0">Daftar Produk Tersedia</h2>
-    @can('isAdmin')
-    <a href="/produk/create" class="btn btn-primary fw-bold px-4 py-2">Tambah Produk Baru</a>
-    @endcan
+    <div class="d-flex gap-2">
+        @canany(['isAdmin', 'isPustakawan'])
+        <a href="/produk/create" class="btn btn-primary fw-bold px-4 py-2">Tambah Produk Baru</a>
+        @endcanany
+        <a href="/produk/cetak-pdf" class="btn btn-danger fw-bold px-4 py-2">
+            <i class="fa-solid fa-file-pdf"></i> Ekspor PDF
+        </a>
+    </div>
 </div> 
   
      <!-- Grid Produk --> 
@@ -16,6 +21,11 @@
          @foreach($data_produk as $item) 
              <div class="col-md-4 mb-4"> 
                  <div class="card h-100 shadow-sm"> 
+                     @if($item->gambar) 
+                         <img src="{{ asset('storage/' . $item->gambar) }}" class="card-img-top" alt="{{ $item->nama_produk }}" style="height: 200px; object-fit: cover;"> 
+                     @else 
+                         <img src="https://via.placeholder.com/300x200?text=Tidak+Ada+Foto" class="card-img-top" alt="No Image" style="height: 200px; object-fit: cover;"> 
+                     @endif 
                      <div class="card-body"> 
                          <!-- Informasi Produk --> 
                          <h5 class="card-title fw-bold">{{ $item->nama_produk }}</h5> 
@@ -29,8 +39,8 @@
                              <p class="card-text text-danger mb-2 fw-semibold">Stok Habis</p> 
                          @endif 
                            <!-- Tombol Aksi Edit dan Hapus --> 
-                         <div class="mt-4 pt-3 border-top d-flex justify-content-between align-items-center"> 
-                             @can('isAdmin')
+                          <div class="mt-4 pt-3 border-top d-flex justify-content-between align-items-center"> 
+                              @canany(['isAdmin', 'isPustakawan'])
                              <!-- Tombol Edit (Boleh menggunakan Link biasa karena method GET) --> 
                              <a href="/produk/{{ $item->id }}/edit" class="btn btn-sm btn-outline-warning w-50 me-2"> 
                                  Edit 
@@ -45,9 +55,9 @@
                                      Hapus 
                                  </button> 
                              </form>
-                             @endcan
-  
-                         </div> 
+                              @endcanany
+   
+                          </div> 
                      </div> 
                  </div> 
              </div> 

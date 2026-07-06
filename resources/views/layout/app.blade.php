@@ -10,7 +10,7 @@
 <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
         <div class="container">
-            <a class="navbar-brand" href="/">TokoKita Vite</a>
+            <a class="navbar-brand" href="/">TokoKita</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -18,6 +18,20 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="/produk">Produk</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/buku">Buku</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/peminjaman">Peminjaman</a>
+                    </li>
+                    @canany(['isAdmin', 'isPustakawan'])
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/peminjaman">Admin Peminjaman</a>
+                        </li>
+                    @endcanany
+                    <li class="nav-item">
+                        <a class="nav-link" href="/tentang">Tentang</a>
                     </li>
                 </ul>
 
