@@ -24,8 +24,8 @@
  <body>
  <div class="container">
  <h1>Selamat Datang di Toko Kita!</h1>
- <p>Nama: Christian Rosicky Damanik</p>
- <p>NIM: 224520046</p>
+ <p>Nama: REMSITI MESRA PURBA </p>
+ <p>NIM: 224520032</p>
  <p>Aplikasi ini dibuat menggunakan Laravel 12.</p>
  </div>
  </body>
